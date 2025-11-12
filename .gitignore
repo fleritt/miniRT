@@ -1,0 +1,33 @@
+# Compiled files
+*.o
+*.a
+*.so
+
+# Executable
+miniRT
+
+# MinilibX compiled files
+libs/minilibx-linux/*.o
+libs/minilibx-linux/*.a
+libs/minilibx-linux/test/mlx-test
+
+# libft compiled files
+libs/libft/*.o
+libs/libft/*.a
+
+# Debug files
+*.dSYM/
+*.su
+*.idb
+*.pdb
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
