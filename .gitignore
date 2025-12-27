@@ -31,3 +31,7 @@ Thumbs.db
 *.swp
 *.swo
 *~
+
+# CMake build directories
+build/
+obj/

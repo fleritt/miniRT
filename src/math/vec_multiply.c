@@ -1,19 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   mini_rt.h                                          :+:      :+:    :+:   */
+/*   vec_multiply.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rfleritt <rfleritt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/12 08:36:35 by rfleritt          #+#    #+#             */
-/*   Updated: 2025/11/12 08:50:02 by rfleritt         ###   ########.fr       */
+/*   Created: 2025/12/12 19:25:18 by rfleritt          #+#    #+#             */
+/*   Updated: 2025/12/14 11:06:58 by rfleritt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINI_RT
-# define MINI_RT
+#include "../../include/minirt.h"
 
-# include <stdlib.h>
-# include <unistd.h>
-
-#endif
+t_vec3 vec_mult(t_vec3 v, float t)
+{
+    return(vec_new(v.x * t, v.y * t, v.z * t));
+}

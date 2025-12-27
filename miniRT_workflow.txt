@@ -1,0 +1,64 @@
+# miniRT - Workflow por Fases
+
+## FASE 0: Setup (1 día)
+- [x] Makefile básico con MLX42
+- [x] Estructura de carpetas (src/, include/, scenes/)
+- [x] Ventana negra que abre y cierra con ESC
+
+## FASE 1: Vectores básicos (2 días)
+- [x] Struct t_vec3 (x, y, z)
+- [x] Operaciones: new, add, sub, mult_scalar, dot, length, normalize
+- [x] Probar con prints que funcionan
+
+## FASE 2: Ray-Sphere simple (3 días)
+- [x] Struct t_ray (origin, direction)
+- [x] Esfera hardcodeada en el centro
+- [x] Intersección matemática (fórmula cuadrática)
+- [x] Pintar: rojo si hit, azul si no hit
+
+## FASE 3: Cámara básica (2 días)
+- [x] Struct t_camera (position, direction, fov)
+- [x] Generar rayos desde cámara por cada pixel
+- [x] Renderizar esfera desde diferentes ángulos
+
+## FASE 4: Parser mínimo (3-4 días)
+- [x] Leer archivo . rt
+- [x] Parsear: A (ambient), C (camera), L (light), sp (sphere)
+- [ ] Guardar en estructuras
+- [ ] Validación básica (rangos, formato)
+
+## FASE 5: Iluminación simple (3 días)
+- [ ] Luz ambiental (color base)
+- [ ] Luz difusa (dot product con normal)
+- [ ] Calcular color final del pixel
+
+## FASE 6: Más objetos (4-5 días)
+- [ ] Plano (pl)
+- [ ] Cilindro (cy)
+- [ ] Intersecciones específicas de cada uno
+
+## FASE 7: Refinar (2-3 días)
+- [ ] Múltiples objetos en la escena
+- [ ] Shadows (rayos hacia la luz)
+- [ ] Norma, leaks, errores
+
+## BONUS (opcional)
+- [ ] Reflexiones
+- [ ] Checkerboard
+- [ ] Más figuras (cono, etc.)
+
+---
+
+## 📌 Reglas de oro:
+1. NO avances de fase hasta terminar la anterior
+2. Cada fase debe COMPILAR y FUNCIONAR
+3. Aprende matemáticas SOLO cuando las necesites
+4. Commit después de cada mini-logro
+5. Si te atascas >2h, pide ayuda o busca otra referencia
+
+## 🎯 Objetivo de cada fase:
+- Fase 0-1: Ver algo en pantalla
+- Fase 2: Ver tu PRIMERA esfera renderizada (momento épico)
+- Fase 3: Mover la cámara
+- Fase 4: Leer archivos . rt (independence achieved)
+- Fase 5+: Hacer el proyecto bonito y completo

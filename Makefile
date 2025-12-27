@@ -6,7 +6,7 @@
 #    By: rfleritt <rfleritt@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/11/12 09:14:24 by rfleritt          #+#    #+#              #
-#    Updated: 2025/11/12 09:30:18 by rfleritt         ###   ########.fr        #
+#    Updated: 2025/12/27 11:51:03 by rfleritt         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,9 +19,8 @@ CLEAR_COLOR := \033[0m
 NAME        := miniRT
 
 CC          := gcc
-CFLAGS      := -Wall -Werror -Wextra
+CFLAGS      := -Wall -Werror -Wextra -g3
 RM          := rm -f
-
 
 SRC_DIR     := src/
 OBJ_DIR     := obj/
@@ -30,33 +29,48 @@ INCLUDE_DIR := include/
 LIBFT_DIR   := libs/libft/
 LIBFT       := $(LIBFT_DIR)libft.a
 
-MLX_DIR     := libs/minilibx-linux/
-MLX         := $(MLX_DIR)libmlx_Linux.a
+MLX42_DIR     := libs/mlx
+MLX         := $(MLX42_DIR)/build/libmlx42.a
 
 
-SRCS        := $(SRC_DIR)main.c
+SRCS        := main.c \
+				window/init_window.c \
+				window/ft_render.c \
+				window/key_register.c \
+				math/vec_add.c \
+				math/vec_dot.c \
+				math/vec_length.c \
+				math/vec_multiply.c \
+				math/vec_new.c \
+				math/vec_norm.c \
+				math/vec_sub.c \
+				math/vec_cross.c \
+				parser/ft_error.c \
+				parser/init_scene.c \
+				ray_tracer/hit_sphere.c \
+				ray_tracer/camera.c \
 
-OBJS        := $(addprefix $(OBJ_DIR), $(notdir $(SRCS:.c=.o)))
+OBJS        := $(addprefix $(OBJ_DIR), $(SRCS:.c=.o))
 
-HEADERS     := $(INCLUDE_DIR)mini_rt.h
+HEADERS     := $(INCLUDE_DIR)minirt.h $(INCLUDE_DIR)data_minirt.h
 
 
 OS = $(shell uname)
 ifeq ($(OS), Linux)
-	MLX_FLAGS := -L $(MLX_DIR) -lmlx -lXext -lX11 -lm
+	MLX_FLAGS := -ldl -lglfw -pthread -lm
 else
-	MLX_FLAGS := -L $(MLX_DIR) -lmlx -framework OpenGL -framework AppKit
+	MLX_FLAGS := -L $(MLX42_DIR) -lmlx -framework OpenGL -framework AppKit
 endif
 
 
 all: $(NAME)
 
 $(NAME): $(LIBFT) $(MLX) $(OBJS)
-	@$(CC) $(CFLAGS) $(OBJS) $(LIBFT) $(MLX_FLAGS) -o $(NAME)
+	@$(CC) $(CFLAGS) $(OBJS) $(LIBFT) $(MLX) $(MLX_FLAGS) -o $(NAME)
 	@echo "$(CYAN)✅ Compilado $(NAME) exitosamente!$(CLEAR_COLOR)"
 
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c $(HEADERS)
-	@mkdir -p $(OBJ_DIR)
+	@mkdir -p $(dir $@)
 	@$(CC) $(CFLAGS) -I$(INCLUDE_DIR) -c $< -o $@
 	@echo "$(GREEN)🔨 Compilando: $<$(CLEAR_COLOR)"
 
@@ -66,9 +80,9 @@ $(LIBFT):
 	@echo "$(GREEN)✅ libft compilada!$(CLEAR_COLOR)"
 
 $(MLX):
-	@echo "$(YELLOW)🖼️  Compilando MiniLibX...$(CLEAR_COLOR)"
-	@cd $(MLX_DIR) && ./configure > /dev/null 2>&1 || make -f Makefile.gen
-	@echo "$(GREEN)✅ MiniLibX compilada!$(CLEAR_COLOR)"
+	@cmake -B $(MLX42_DIR)/build $(MLX42_DIR)
+	@cmake --build $(MLX42_DIR)/build
+	@echo "$(GREEN)✅ Compilado MLX42\n$(CLEAR_COLOR)"
 
 clean:
 	@$(RM) -r $(OBJ_DIR)

@@ -1,26 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   vec_norm.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rfleritt <rfleritt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/08 16:04:25 by rfleritt          #+#    #+#             */
-/*   Updated: 2025/12/27 12:10:21 by rfleritt         ###   ########.fr       */
+/*   Created: 2025/12/12 19:23:11 by rfleritt          #+#    #+#             */
+/*   Updated: 2025/12/14 12:00:30 by rfleritt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minirt.h"
+#include "../../include/minirt.h"
 
-int main(int argc, char **argv)
+t_vec3 vec_norm(t_vec3 v)
 {
-    t_data *data;
+    float len;
 
-    if (argc != 2)
-        return (ft_msg_error("One scene requires", 1));
-    data = init_scene(argv[1]);
-    if (!data || !data->token)
-        return (1);
-    init_window(data);
-    return (0);
+    len = vec_length(v);
+    if (len == 0.0f)
+		return (vec_new(0, 0, 0));
+    return (vec_mult(v, 1.0 / len));
 }

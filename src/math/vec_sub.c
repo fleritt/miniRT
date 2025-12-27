@@ -1,26 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   vec_sub.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rfleritt <rfleritt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/08 16:04:25 by rfleritt          #+#    #+#             */
-/*   Updated: 2025/12/27 12:10:21 by rfleritt         ###   ########.fr       */
+/*   Created: 2025/12/12 19:24:44 by rfleritt          #+#    #+#             */
+/*   Updated: 2025/12/14 10:59:36 by rfleritt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minirt.h"
+#include "../../include/minirt.h"
 
-int main(int argc, char **argv)
+t_vec3 vec_sub(t_vec3 a, t_vec3 b)
 {
-    t_data *data;
-
-    if (argc != 2)
-        return (ft_msg_error("One scene requires", 1));
-    data = init_scene(argv[1]);
-    if (!data || !data->token)
-        return (1);
-    init_window(data);
-    return (0);
+    return (vec_new(a.x - b.x, a.y - b.y, a.z - b.z));
 }

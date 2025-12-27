@@ -6,7 +6,7 @@
 #    By: rfleritt <rfleritt@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/25 12:38:40 by rfleritt          #+#    #+#              #
-#    Updated: 2025/11/12 08:49:56 by rfleritt         ###   ########.fr        #
+#    Updated: 2025/11/12 09:22:13 by rfleritt         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,16 +34,16 @@ INCLUDE = -I .
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	$(AR) $(NAME) $(OBJ)
+	@$(AR) $(NAME) $(OBJ)
 
 %.o: %.c 
-	$(CC) $(CFLAGS) $(INCLUDE) -c $< -o $@
+	@$(CC) $(CFLAGS) $(INCLUDE) -c $< -o $@
 
 clean:
-	$(RM) $(OBJ) 
+	@$(RM) $(OBJ) 
 
 fclean: clean
-	$(RM) $(NAME)
+	@$(RM) $(NAME)
 
 re: fclean all
 
