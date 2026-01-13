@@ -6,7 +6,7 @@
 /*   By: rfleritt <rfleritt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/12 08:36:35 by rfleritt          #+#    #+#             */
-/*   Updated: 2025/12/27 14:21:18 by rfleritt         ###   ########.fr       */
+/*   Updated: 2025/12/27 15:32:09 by rfleritt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@
 void init_window(t_data *data);
 void key_close_window(mlx_key_data_t keydata, void *param);
 void ft_render(t_data *data);
+void exit_msg_error(char *err);
 int ft_msg_error(char *err, int ret);
 t_data *init_scene(char *scene);
 float vec3_dot(t_vec3 a, t_vec3 b);
@@ -43,5 +44,11 @@ void init_camera(t_data *data);
 void key_register(mlx_key_data_t keydata, void *param);
 int hit_sphere(t_ray ray, t_sphere sphere);
 int parse_scene(t_data *data);
+void parse_sphere(t_data *data);
+void parse_ambient(t_data *data);
+void parse_light(t_data *data);
+void parse_plane(t_data *data);
+void parse_camera(t_data *data);
+t_sphere set_sphere(char **data);
 
 #endif

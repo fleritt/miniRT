@@ -6,7 +6,7 @@
 /*   By: rfleritt <rfleritt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/10 18:13:48 by rfleritt          #+#    #+#             */
-/*   Updated: 2025/12/27 14:20:32 by rfleritt         ###   ########.fr       */
+/*   Updated: 2025/12/27 14:44:54 by rfleritt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,6 @@ t_data *init_scene(char *scene)
     data = malloc(sizeof(t_data));
     if (tokenize_scene(scene, data))
         return(NULL);
-    if (parse_scene(data))
-        return (NULL);
+    parse_scene(data);
     return (data);
 }

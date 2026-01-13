@@ -1,25 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_error.c                                         :+:      :+:    :+:   */
+/*   set_elements.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rfleritt <rfleritt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/10 18:08:29 by rfleritt          #+#    #+#             */
-/*   Updated: 2025/12/27 14:42:59 by rfleritt         ###   ########.fr       */
+/*   Created: 2025/12/27 15:30:56 by rfleritt          #+#    #+#             */
+/*   Updated: 2026/01/04 10:54:44 by rfleritt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minirt.h"
 
-void exit_msg_error(char *err)
+t_sphere set_sphere(char **data)
 {
-    ft_putstr_fd(err, 2);
-    exit(EXIT_FAILURE);
-}
-
-int ft_msg_error(char *err, int ret)
-{
-    ft_putstr_fd(err, 2);
-    return (ret);
+    t_sphere sphere;
+    int i;
+    
+    i = 1;
+    while(data[i])
+    {
+        
+        if(vec)
+            free(vec);
+    }
 }

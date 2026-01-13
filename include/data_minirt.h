@@ -6,7 +6,7 @@
 /*   By: rfleritt <rfleritt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/12 10:12:59 by rfleritt          #+#    #+#             */
-/*   Updated: 2025/12/27 11:40:59 by rfleritt         ###   ########.fr       */
+/*   Updated: 2025/12/27 15:01:30 by rfleritt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,26 @@ typedef struct s_color
     float b;
 }   t_color;
 
+typedef struct s_plane
+{
+    t_vec3 point;
+    t_vec3 normal;
+    t_color color;
+}   t_plane;
+
+typedef struct s_light
+{
+    t_vec3 position;
+    float intensity;
+    t_color color;
+}   t_light;
+
+typedef struct s_ambient
+{
+    float intensity;
+    t_color color;
+}   t_ambient;
+
 typedef struct s_ray
 {
     t_vec3 origin;
@@ -87,11 +107,19 @@ typedef struct s_scene
     struct s_scene *next;
 }   t_scene;
 
+typedef struct s_scene_data
+{
+    t_camera camera;
+    t_sphere *sphere;
+    t_ambient ambient;
+    t_plane *plane;
+    t_light light;
+}   t_scene_data;
+
 typedef struct s_data
 {
     t_window *window;
-    t_sphere sphere;
-    t_camera camera;
+    t_scene_data *scene;
     t_ray ray;
     t_scene *token;
 }   t_data;
