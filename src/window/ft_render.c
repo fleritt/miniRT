@@ -6,7 +6,7 @@
 /*   By: rfleritt <rfleritt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/15 18:44:11 by rfleritt          #+#    #+#             */
-/*   Updated: 2025/12/22 12:05:01 by rfleritt         ###   ########.fr       */
+/*   Updated: 2026/01/13 14:07:28 by rfleritt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,8 @@ void ft_render(t_data *data)
         while(c[1] < WIDTH)
         {
             init_hit_sphere(c[1], c[0], data);
-            if ((hit_sphere(data->ray, data->sphere)) >= 0)
-                ft_render_image(data->sphere.color, c[1], c[0], data->window);
+            if ((hit_sphere(data->ray, data->scene->sphere)) >= 0)
+                ft_render_image(data->scene->sphere.color, c[1], c[0], data->window);
             else
                 ft_render_image(pixel, c[1], c[0], data->window);
             c[1]++;

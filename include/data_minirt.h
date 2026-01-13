@@ -6,7 +6,7 @@
 /*   By: rfleritt <rfleritt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/12 10:12:59 by rfleritt          #+#    #+#             */
-/*   Updated: 2025/12/27 15:01:30 by rfleritt         ###   ########.fr       */
+/*   Updated: 2026/01/13 12:58:00 by rfleritt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,7 @@ typedef struct s_scene_data
     t_sphere *sphere;
     t_ambient ambient;
     t_plane *plane;
-    t_light light;
+    t_light *light;
 }   t_scene_data;
 
 typedef struct s_data

@@ -6,7 +6,7 @@
 /*   By: rfleritt <rfleritt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/12 08:36:35 by rfleritt          #+#    #+#             */
-/*   Updated: 2025/12/27 15:32:09 by rfleritt         ###   ########.fr       */
+/*   Updated: 2026/01/13 14:02:49 by rfleritt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,16 +39,22 @@ t_vec3 vec_sub(t_vec3 a, t_vec3 b);
 t_vec3 vec_add(t_vec3 a, t_vec3 b);
 t_vec3 vec_norm(t_vec3 v);
 t_vec3 vec_cross(t_vec3 a, t_vec3 b);
+t_vec3 parse_vec(char *vec);
 void init_hit_sphere(int x, int y, t_data *data);
 void init_camera(t_data *data);
 void key_register(mlx_key_data_t keydata, void *param);
 int hit_sphere(t_ray ray, t_sphere sphere);
-int parse_scene(t_data *data);
+void parse_scene(t_data *data);
 void parse_sphere(t_data *data);
 void parse_ambient(t_data *data);
 void parse_light(t_data *data);
 void parse_plane(t_data *data);
 void parse_camera(t_data *data);
 t_sphere set_sphere(char **data);
+t_light set_light(char **data);
+t_plane set_plane(char **data);
+t_camera set_camera(char **data);
+t_ambient set_ambient(char **data);
+t_color parse_color(char *color);
 
 #endif
