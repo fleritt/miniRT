@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_render.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rfleritt <rfleritt@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ricardo <ricardo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/15 18:44:11 by rfleritt          #+#    #+#             */
-/*   Updated: 2026/01/13 14:07:28 by rfleritt         ###   ########.fr       */
+/*   Updated: 2026/01/29 19:21:29 by ricardo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,26 +44,32 @@ void ft_render_image(t_color color, int x, int y, t_window *window)
 void ft_render(t_data *data)
 {
     int c[2];
-    float t;
+    int i;
     t_color pixel;
+    t_color background;
     
     c[0] = 0;
-    t = (float)c[0] / (HEIGHT - 1);
-    pixel = lerp_color(data->window->color[0], data->window->color[1], t);
+    background = (t_color){255,255,255};
     while(c[0] < HEIGHT)
     {
         c[1] = 0;
         while(c[1] < WIDTH)
         {
             init_hit_sphere(c[1], c[0], data);
-            if ((hit_sphere(data->ray, data->scene->sphere)) >= 0)
-                ft_render_image(data->scene->sphere.color, c[1], c[0], data->window);
-            else
-                ft_render_image(pixel, c[1], c[0], data->window);
+            pixel = background;
+            i = 0;
+            while (i < data->scene->n_sphere)
+            {
+                if ((hit_sphere(data->ray, data->scene->sphere[i])) >= 0)
+                {
+                    pixel = data->scene->sphere[i].color;
+                    break ;
+                }
+                i++;
+            }
+            ft_render_image(pixel, c[1], c[0], data->window);
             c[1]++;
         }
-        t = (float)c[0] / (HEIGHT - 1);
-        pixel = lerp_color(data->window->color[0], data->window->color[1], t);
         c[0]++;
     }
 }

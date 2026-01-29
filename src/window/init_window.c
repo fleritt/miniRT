@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_window.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rfleritt <rfleritt@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ricardo <ricardo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/08 16:24:55 by rfleritt          #+#    #+#             */
-/*   Updated: 2025/12/22 18:22:11 by rfleritt         ###   ########.fr       */
+/*   Updated: 2026/01/29 18:48:30 by ricardo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,6 @@ void	init_window(t_data *data)
 	if (!data)
 		return ;
 	data->window = malloc(sizeof(t_window));
-	data->window->color = malloc(sizeof(t_color) * 2);
-	data->window->color[0] = (t_color){135, 206, 235};
-	data->window->color[1] = (t_color){25, 25, 112};
 	data->window->mlx = mlx_init(WIDTH, HEIGHT, "minirt", true);
 	if (!data->window->mlx)
         return ;

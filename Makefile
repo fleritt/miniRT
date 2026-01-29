@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: rfleritt <rfleritt@student.42.fr>          +#+  +:+       +#+         #
+#    By: ricardo <ricardo@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/11/12 09:14:24 by rfleritt          #+#    #+#              #
-#    Updated: 2025/12/27 11:51:03 by rfleritt         ###   ########.fr        #
+#    Updated: 2026/01/29 19:32:46 by ricardo          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,6 +47,10 @@ SRCS        := main.c \
 				math/vec_cross.c \
 				parser/ft_error.c \
 				parser/init_scene.c \
+				parser/parse_data.c \
+				parser/parse_elements.c \
+				parser/parse_scene.c \
+				parser/set_elements.c \
 				ray_tracer/hit_sphere.c \
 				ray_tracer/camera.c \
 

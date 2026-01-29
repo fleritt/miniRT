@@ -24,8 +24,8 @@
 ## FASE 4: Parser mínimo (3-4 días)
 - [x] Leer archivo . rt
 - [x] Parsear: A (ambient), C (camera), L (light), sp (sphere)
-- [ ] Guardar en estructuras
-- [ ] Validación básica (rangos, formato)
+- [x] Guardar en estructuras
+- [x] Validación básica (rangos, formato)
 
 ## FASE 5: Iluminación simple (3 días)
 - [ ] Luz ambiental (color base)

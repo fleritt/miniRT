@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   key_register.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rfleritt <rfleritt@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ricardo <ricardo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/22 17:52:31 by rfleritt          #+#    #+#             */
-/*   Updated: 2025/12/22 18:37:05 by rfleritt         ###   ########.fr       */
+/*   Updated: 2026/01/29 18:23:57 by ricardo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,40 +18,40 @@ void ft_reload_window(t_order key, t_data *data)
     
     if(key == UP)
     {
-        data->camera.position.y++;
+        data->scene->camera.position.y++;
         ft_render(data);
     }
     if(key == DOWN)
     {
-        data->camera.position.y--;
+        data->scene->camera.position.y--;
         ft_render(data);
     }
     if(key == LEFT)
     {
-        data->camera.position.x--;
+        data->scene->camera.position.x--;
         ft_render(data);
     }
     if(key == RIGHT)
     {
-        data->camera.position.x++;
+        data->scene->camera.position.x++;
         ft_render(data);
     }
     if(key == A)
     {
-        data->camera.direction.x++;
-        data->camera.forward = vec_norm(data->camera.direction);
+        data->scene->camera.direction.x++;
+        data->scene->camera.forward = vec_norm(data->scene->camera.direction);
         world_up = (t_vec3){0, 1, 0};
-        data->camera.right = vec_norm(vec_cross(data->camera.forward, world_up));
-        data->camera.up = vec_cross(data->camera.right, data->camera.forward);
+        data->scene->camera.right = vec_norm(vec_cross(data->scene->camera.forward, world_up));
+        data->scene->camera.up = vec_cross(data->scene->camera.right, data->scene->camera.forward);
         ft_render(data);
     }
     if(key == D)
     {
-        data->camera.direction.x--;
-        data->camera.forward = vec_norm(data->camera.direction);
+        data->scene->camera.direction.x--;
+        data->scene->camera.forward = vec_norm(data->scene->camera.direction);
         world_up = (t_vec3){0, 1, 0};
-        data->camera.right = vec_norm(vec_cross(data->camera.forward, world_up));
-        data->camera.up = vec_cross(data->camera.right, data->camera.forward);
+        data->scene->camera.right = vec_norm(vec_cross(data->scene->camera.forward, world_up));
+        data->scene->camera.up = vec_cross(data->scene->camera.right, data->scene->camera.forward);
         ft_render(data);
     }
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_elements.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rfleritt <rfleritt@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ricardo <ricardo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/04 10:55:25 by rfleritt          #+#    #+#             */
-/*   Updated: 2026/01/13 14:01:29 by rfleritt         ###   ########.fr       */
+/*   Updated: 2026/01/29 18:42:16 by ricardo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ t_vec3 parse_vec(char *vec)
     t_vec3 vec3;
 
     i = 0;
-    while (vec)
+    parse = 0;
+    while (vec[i])
     {
         if(vec[i] == ',')
             parse++;
@@ -46,9 +47,10 @@ t_color parse_color(char *color)
     t_color rgb;
 
     i = -1;
-    while (color)
+    parse = 0;
+    while (color[++i])
     {
-        if(color[++i] == ',')
+        if(color[i] == ',')
             parse++;
     }
     if(parse != 2)

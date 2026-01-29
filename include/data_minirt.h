@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   data_minirt.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rfleritt <rfleritt@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ricardo <ricardo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/12 10:12:59 by rfleritt          #+#    #+#             */
-/*   Updated: 2026/01/13 12:58:00 by rfleritt         ###   ########.fr       */
+/*   Updated: 2026/01/29 19:13:37 by ricardo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,6 @@ typedef struct s_window
     mlx_image_t *mlx_image;
 	int width;
     int height;
-    t_color *color;
 }	t_window;
 
 typedef struct s_scene
@@ -114,6 +113,7 @@ typedef struct s_scene_data
     t_ambient ambient;
     t_plane *plane;
     t_light *light;
+    int n_sphere;
 }   t_scene_data;
 
 typedef struct s_data
