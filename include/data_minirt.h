@@ -6,7 +6,7 @@
 /*   By: ricardo <ricardo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/12 10:12:59 by rfleritt          #+#    #+#             */
-/*   Updated: 2026/01/29 19:13:37 by ricardo          ###   ########.fr       */
+/*   Updated: 2026/02/07 18:34:28 by ricardo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,14 @@ typedef struct s_ray
     t_vec3 direction;
 }   t_ray;
 
+typedef struct s_hit_info
+{
+    float t;
+    t_vec3 point;
+    t_vec3 normal;
+    t_color color;
+}   t_hit_info;
+
 typedef struct s_sphere
 {
     t_vec3 center;
@@ -114,6 +122,8 @@ typedef struct s_scene_data
     t_plane *plane;
     t_light *light;
     int n_sphere;
+    int n_plane;
+    int n_light;
 }   t_scene_data;
 
 typedef struct s_data

@@ -6,7 +6,7 @@
 /*   By: ricardo <ricardo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/27 15:30:56 by rfleritt          #+#    #+#             */
-/*   Updated: 2026/01/29 19:15:06 by ricardo          ###   ########.fr       */
+/*   Updated: 2026/02/07 18:36:35 by ricardo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,9 @@ t_plane set_plane(char **data)
 t_camera set_camera(char **data)
 {
     t_camera camera;
+    
+    if (!data[1] || !data[2] || !data[3])
+        exit_msg_error("Camera needs: position direction fov");
     
     camera.position = parse_vec(data[1]);
     camera.direction = parse_vec(data[2]);

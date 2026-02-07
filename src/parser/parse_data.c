@@ -6,7 +6,7 @@
 /*   By: ricardo <ricardo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/27 14:46:18 by rfleritt          #+#    #+#             */
-/*   Updated: 2026/01/29 19:17:26 by ricardo          ###   ########.fr       */
+/*   Updated: 2026/02/07 18:34:26 by ricardo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ void parse_light(t_data *data)
         }
         temp = temp->next;
     }
+    data->scene->n_light = n_light;
 }
 
 void parse_plane(t_data *data)
@@ -91,6 +92,7 @@ void parse_plane(t_data *data)
         }
         temp = temp->next;
     }
+    data->scene->n_plane = n_plane;
 }
 
 void parse_camera(t_data *data)

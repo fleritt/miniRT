@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rfleritt <rfleritt@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ricardo <ricardo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/08 16:04:25 by rfleritt          #+#    #+#             */
-/*   Updated: 2025/12/27 12:10:21 by rfleritt         ###   ########.fr       */
+/*   Updated: 2026/02/07 18:21:57 by ricardo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,5 +22,6 @@ int main(int argc, char **argv)
     if (!data || !data->token)
         return (1);
     init_window(data);
+    cleanup_data(data);
     return (0);
 }

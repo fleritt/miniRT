@@ -6,7 +6,7 @@
 /*   By: ricardo <ricardo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/15 18:44:11 by rfleritt          #+#    #+#             */
-/*   Updated: 2026/01/29 19:21:29 by ricardo          ###   ########.fr       */
+/*   Updated: 2026/02/07 18:30:36 by ricardo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,12 +41,66 @@ void ft_render_image(t_color color, int x, int y, t_window *window)
     pixels[index + 3] = (uint8_t)255;
 }
 
+/**
+ * Encuentra el objeto más cercano intersectado por el rayo
+ * Retorna 1 si hay intersección, 0 si no
+ * OPTIMIZADO: early exit cuando encuentra hit muy cercano
+ */
+static int	find_closest_hit(t_data *data, t_ray ray, t_hit_info *hit)
+{
+	t_hit_info	temp_hit;
+	float		closest_t;
+	int			i;
+	int			found;
+
+	closest_t = -1;
+	found = 0;
+	
+	// Comprobar esferas con early exit
+	i = 0;
+	while (i < data->scene->n_sphere)
+	{
+		if (hit_sphere_info(ray, data->scene->sphere[i], &temp_hit))
+		{
+			if (closest_t < 0 || temp_hit.t < closest_t)
+			{
+				closest_t = temp_hit.t;
+				*hit = temp_hit;
+				found = 1;
+				
+				// Early exit: si el hit está muy cerca, no necesitamos buscar más
+				if (closest_t < 0.01f)
+					return (1);
+			}
+		}
+		i++;
+	}
+	
+	// Comprobar planos
+	i = 0;
+	while (i < data->scene->n_plane)
+	{
+		if (hit_plane_info(ray, data->scene->plane[i], &temp_hit))
+		{
+			if (closest_t < 0 || temp_hit.t < closest_t)
+			{
+				closest_t = temp_hit.t;
+				*hit = temp_hit;
+				found = 1;
+			}
+		}
+		i++;
+	}
+	return (found);
+}
+
 void ft_render(t_data *data)
 {
     int c[2];
-    int i;
     t_color pixel;
     t_color background;
+    t_hit_info hit;
+    t_vec3 view_dir;
     
     c[0] = 0;
     background = (t_color){255,255,255};
@@ -57,16 +111,17 @@ void ft_render(t_data *data)
         {
             init_hit_sphere(c[1], c[0], data);
             pixel = background;
-            i = 0;
-            while (i < data->scene->n_sphere)
+            
+            // Buscar intersección más cercana
+            if (find_closest_hit(data, data->ray, &hit))
             {
-                if ((hit_sphere(data->ray, data->scene->sphere[i])) >= 0)
-                {
-                    pixel = data->scene->sphere[i].color;
-                    break ;
-                }
-                i++;
+                // Vector desde el punto hacia la cámara
+                view_dir = vec_norm(vec_sub(data->ray.origin, hit.point));
+                
+                // Calcular iluminación completa
+                pixel = calculate_lighting(data, hit, view_dir);
             }
+            
             ft_render_image(pixel, c[1], c[0], data->window);
             c[1]++;
         }

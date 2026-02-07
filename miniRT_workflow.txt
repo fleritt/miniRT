@@ -28,12 +28,12 @@
 - [x] Validación básica (rangos, formato)
 
 ## FASE 5: Iluminación simple (3 días)
-- [ ] Luz ambiental (color base)
-- [ ] Luz difusa (dot product con normal)
-- [ ] Calcular color final del pixel
+- [x] Luz ambiental (color base)
+- [x] Luz difusa (dot product con normal)
+- [x] Calcular color final del pixel
 
 ## FASE 6: Más objetos (4-5 días)
-- [ ] Plano (pl)
+- [x] Plano (pl)
 - [ ] Cilindro (cy)
 - [ ] Intersecciones específicas de cada uno
 

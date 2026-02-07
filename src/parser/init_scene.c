@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_scene.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rfleritt <rfleritt@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ricardo <ricardo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/10 18:13:48 by rfleritt          #+#    #+#             */
-/*   Updated: 2025/12/27 14:44:54 by rfleritt         ###   ########.fr       */
+/*   Updated: 2026/02/07 18:36:22 by ricardo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,8 @@ void token_add_back(t_scene **back, t_scene **add)
 int set_token(char *line, t_scene **token)
 {
     t_scene *add;
+    char *cleaned_line;
+    int i;
 
     add = malloc(sizeof(t_scene));
     add->type = VOID;
@@ -61,7 +63,20 @@ int set_token(char *line, t_scene **token)
         return (ft_msg_error("Invalid scene", 1));
     if (add->type == VOID)
         return (free(add), 0);
-    add->data = ft_split(line, ' ');
+    
+    // Reemplazar tabs por espacios para normalizar
+    cleaned_line = ft_strdup(line);
+    i = 0;
+    while (cleaned_line[i])
+    {
+        if (cleaned_line[i] == '\t')
+            cleaned_line[i] = ' ';
+        i++;
+    }
+    
+    add->data = ft_split(cleaned_line, ' ');
+    free(cleaned_line);
+    
     if (*token == NULL)
         *token = add;
     else
