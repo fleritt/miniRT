@@ -69,4 +69,8 @@ void free_tokens(t_scene *token);
 void free_scene(t_scene_data *scene);
 void cleanup_data(t_data *data);
 
+t_cylinder set_cylinder(char **data);
+void parse_cylinder(t_data *data);
+int hit_cylinder_info(t_ray ray, t_cylinder cy, t_hit_info *hit);
+
 #endif

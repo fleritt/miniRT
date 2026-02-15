@@ -99,6 +99,15 @@ typedef struct s_sphere
     t_color color;
 }   t_sphere;
 
+typedef struct s_cylinder
+{
+    t_vec3 center;
+    t_vec3 axis;
+    float radius;
+    float height;
+    t_color color;
+} t_cylinder;
+
 typedef struct s_window
 {
     mlx_t *mlx;
@@ -121,6 +130,8 @@ typedef struct s_scene_data
     t_ambient ambient;
     t_plane *plane;
     t_light *light;
+    t_cylinder *cylinder;
+    int n_cylinder;
     int n_sphere;
     int n_plane;
     int n_light;

@@ -31,11 +31,11 @@ int	is_in_shadow(t_data *data, t_hit_info hit, t_light light)
 	light_dir = vec_sub(light.position, hit.point);
 	light_distance = vec_length(light_dir);
 	light_dir = vec_norm(light_dir);
-	
+
 	// Rayo desde el punto (con pequeño offset) hacia la luz
 	shadow_ray.origin = vec_add(hit.point, vec_mult(hit.normal, 0.001f));
 	shadow_ray.direction = light_dir;
-	
+
 	// Comprobar esferas (early exit en cuanto encuentra oclusión)
 	i = 0;
 	while (i < data->scene->n_sphere)
@@ -45,7 +45,7 @@ int	is_in_shadow(t_data *data, t_hit_info hit, t_light light)
 			return (1);
 		i++;
 	}
-	
+
 	// Comprobar planos (early exit)
 	i = 0;
 	while (i < data->scene->n_plane)
@@ -55,7 +55,18 @@ int	is_in_shadow(t_data *data, t_hit_info hit, t_light light)
 			return (1);
 		i++;
 	}
-	
+	// Comprobar cilindros
+	i = 0;
+	while (i < data->scene->n_cylinder)
+	{
+		if (hit_cylinder_info(shadow_ray,
+				data->scene->cylinder[i], &hit))
+		{
+			if (hit.t > 0.001f && hit.t < light_distance)
+				return (1);
+		}
+		i++;
+	}
 	return (0);
 }
 
@@ -72,27 +83,27 @@ t_color	calculate_specular(t_light light, t_hit_info hit, t_vec3 view_dir)
 	float	shininess;
 
 	shininess = 32.0f; // Brillo del material (más alto = más brillante)
-	
+
 	// Vector hacia la luz
 	light_dir = vec_norm(vec_sub(light.position, hit.point));
-	
+
 	// Vector reflejado: R = 2 * (N·L) * N - L
 	reflect_dir = vec_sub(vec_mult(hit.normal, 2.0f * vec3_dot(hit.normal, light_dir)), light_dir);
 	reflect_dir = vec_norm(reflect_dir);
-	
+
 	// Calcular componente especular
 	spec = vec3_dot(reflect_dir, view_dir);
 	if (spec < 0)
 		spec = 0;
-	
+
 	// Elevar a la potencia (shininess)
 	spec = pow(spec, shininess);
-	
+
 	// Color especular (blanco puro modulado por la luz)
 	result.r = (light.color.r / 255.0f) * light.intensity * spec * 255.0f;
 	result.g = (light.color.g / 255.0f) * light.intensity * spec * 255.0f;
 	result.b = (light.color.b / 255.0f) * light.intensity * spec * 255.0f;
-	
+
 	return (result);
 }
 
@@ -113,11 +124,11 @@ t_color	calculate_lighting(t_data *data, t_hit_info hit, t_vec3 view_dir)
 
 	// Luz ambiental (siempre presente)
 	ambient = calculate_ambient(data->scene->ambient, hit.color);
-	
+
 	// Inicializar difusa y especular
 	diffuse = (t_color){0, 0, 0};
 	specular = (t_color){0, 0, 0};
-	
+
 	// Si hay luz, calcular difusa y especular
 	if (data->scene->light && data->scene->n_light > 0)
 	{
@@ -128,17 +139,17 @@ t_color	calculate_lighting(t_data *data, t_hit_info hit, t_vec3 view_dir)
 			// Modo normal: con sombras
 			in_shadow = is_in_shadow(data, hit, data->scene->light[0]);
 		#endif
-		
+
 		if (!in_shadow)
 		{
 			diffuse = calculate_diffuse(data->scene->light[0], hit);
 			specular = calculate_specular(data->scene->light[0], hit, view_dir);
 		}
 	}
-	
+
 	// Sumar todas las componentes
 	final_color = add_colors(ambient, diffuse);
 	final_color = add_colors(final_color, specular);
-	
+
 	return (final_color);
 }

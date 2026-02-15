@@ -20,4 +20,5 @@ void parse_scene(t_data *data)
     parse_light(data);
     parse_plane(data);
     parse_sphere(data);
+    parse_cylinder(data);
 }

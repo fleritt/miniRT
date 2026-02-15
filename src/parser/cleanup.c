@@ -49,6 +49,8 @@ void	free_scene(t_scene_data *scene)
 		free(scene->sphere);
 	if (scene->plane)
 		free(scene->plane);
+	if (scene->cylinder)
+		free(scene->cylinder);
 	if (scene->light)
 		free(scene->light);
 	free(scene);

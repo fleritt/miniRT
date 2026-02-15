@@ -55,7 +55,7 @@ static int	find_closest_hit(t_data *data, t_ray ray, t_hit_info *hit)
 
 	closest_t = -1;
 	found = 0;
-	
+
 	// Comprobar esferas con early exit
 	i = 0;
 	while (i < data->scene->n_sphere)
@@ -67,7 +67,7 @@ static int	find_closest_hit(t_data *data, t_ray ray, t_hit_info *hit)
 				closest_t = temp_hit.t;
 				*hit = temp_hit;
 				found = 1;
-				
+
 				// Early exit: si el hit está muy cerca, no necesitamos buscar más
 				if (closest_t < 0.01f)
 					return (1);
@@ -75,7 +75,7 @@ static int	find_closest_hit(t_data *data, t_ray ray, t_hit_info *hit)
 		}
 		i++;
 	}
-	
+
 	// Comprobar planos
 	i = 0;
 	while (i < data->scene->n_plane)
@@ -91,6 +91,22 @@ static int	find_closest_hit(t_data *data, t_ray ray, t_hit_info *hit)
 		}
 		i++;
 	}
+    // Comprobar cilindros
+    i = 0;
+    while (i < data->scene->n_cylinder)
+    {
+        if (hit_cylinder_info(ray, data->scene->cylinder[i], &temp_hit))
+        {
+            if (closest_t < 0 || temp_hit.t < closest_t)
+            {
+                closest_t = temp_hit.t;
+                *hit = temp_hit;
+                found = 1;
+            }
+        }
+        i++;
+    }
+
 	return (found);
 }
 
@@ -101,7 +117,7 @@ void ft_render(t_data *data)
     t_color background;
     t_hit_info hit;
     t_vec3 view_dir;
-    
+
     c[0] = 0;
     background = (t_color){255,255,255};
     while(c[0] < HEIGHT)
@@ -111,17 +127,17 @@ void ft_render(t_data *data)
         {
             init_hit_sphere(c[1], c[0], data);
             pixel = background;
-            
+
             // Buscar intersección más cercana
             if (find_closest_hit(data, data->ray, &hit))
             {
                 // Vector desde el punto hacia la cámara
                 view_dir = vec_norm(vec_sub(data->ray.origin, hit.point));
-                
+
                 // Calcular iluminación completa
                 pixel = calculate_lighting(data, hit, view_dir);
             }
-            
+
             ft_render_image(pixel, c[1], c[0], data->window);
             c[1]++;
         }
