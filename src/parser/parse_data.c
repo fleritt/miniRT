@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_data.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ricardo <ricardo@student.42.fr>            +#+  +:+       +#+        */
+/*   By: rfleritt <rfleritt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/27 14:46:18 by rfleritt          #+#    #+#             */
-/*   Updated: 2026/02/07 18:34:26 by ricardo          ###   ########.fr       */
+/*   Updated: 2026/03/09 17:51:56 by rfleritt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,11 @@ void parse_sphere(t_data *data)
     temp = data->token;
     n_sphere = found_count_element(temp, SPHERE);
     if (n_sphere == 0)
+    {
+        data->scene->sphere = NULL;
+        data->scene->n_sphere = 0;
         return ;
+    }
     data->scene->sphere = malloc(sizeof(t_sphere) * n_sphere);
     n_sphere = 0;
     while(temp)
@@ -57,7 +61,11 @@ void parse_light(t_data *data)
     temp = data->token;
     n_light = found_count_element(temp, LIGHT);
     if (n_light == 0)
+    {
+        data->scene->light = NULL;
+        data->scene->n_light = 0;
         return ;
+    }
     data->scene->light = malloc(sizeof(t_light) * n_light);
     n_light = 0;
     while(temp)
@@ -80,7 +88,11 @@ void parse_plane(t_data *data)
     temp = data->token;
     n_plane = found_count_element(temp, PLANE);
     if (n_plane == 0)
+    {
+        data->scene->plane = NULL;
+        data->scene->n_plane = 0;
         return ;
+    }
     data->scene->plane = malloc(sizeof(t_plane) * n_plane);
     n_plane = 0;
     while(temp)

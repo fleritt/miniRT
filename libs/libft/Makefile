@@ -6,7 +6,7 @@
 #    By: rfleritt <rfleritt@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/25 12:38:40 by rfleritt          #+#    #+#              #
-#    Updated: 2026/01/13 12:21:40 by rfleritt         ###   ########.fr        #
+#    Updated: 2026/03/05 18:52:57 by rfleritt         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME = libft.a
 
 CC = cc
 
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -fPIE
 
 SRC = ft_atoi.c ft_isascii.c ft_memcpy.c ft_strlcpy.c ft_tolower.c ft_strtrim.c \
 ft_bzero.c ft_isdigit.c ft_memmove.c ft_strlen.c ft_toupper.c ft_split.c \

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ricardo <ricardo@student.42.fr>            +#+  +:+       +#+        */
+/*   By: rfleritt <rfleritt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/12 08:36:35 by rfleritt          #+#    #+#             */
-/*   Updated: 2026/02/07 18:32:37 by ricardo          ###   ########.fr       */
+/*   Updated: 2026/03/05 19:15:23 by rfleritt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ t_color calculate_lighting(t_data *data, t_hit_info hit, t_vec3 view_dir);
 void free_tokens(t_scene *token);
 void free_scene(t_scene_data *scene);
 void cleanup_data(t_data *data);
-
+int found_count_element(t_scene *scene, t_type_scene type);
 t_cylinder set_cylinder(char **data);
 void parse_cylinder(t_data *data);
 int hit_cylinder_info(t_ray ray, t_cylinder cy, t_hit_info *hit);

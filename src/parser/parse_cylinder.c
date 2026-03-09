@@ -8,7 +8,11 @@ void parse_cylinder(t_data *data)
     temp = data->token;
     n_cylinder = found_count_element(temp, CYLINDER);
     if (n_cylinder == 0)
+    {
+        data->scene->cylinder = NULL;
+        data->scene->n_cylinder = 0;
         return ;
+    }
 
     data->scene->cylinder = malloc(sizeof(t_cylinder) * n_cylinder);
     n_cylinder = 0;
