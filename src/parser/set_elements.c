@@ -30,7 +30,10 @@ t_light set_light(char **data)
     light.intensity = ft_atof(data[2]);
     if (light.intensity < 0.0f || light.intensity > 1.0f)
         exit_msg_error("Intensity light just can be 0.0 - 1.0");
-    light.color = parse_color(data[3]);
+    if (data[3])
+        light.color = parse_color(data[3]);
+    else
+        light.color = (t_color){255, 255, 255};
     return (light);
 }
 
