@@ -72,5 +72,10 @@ int found_count_element(t_scene *scene, t_type_scene type);
 t_cylinder set_cylinder(char **data);
 void parse_cylinder(t_data *data);
 int hit_cylinder_info(t_ray ray, t_cylinder cy, t_hit_info *hit);
+void	ft_render_image(t_color color, int x, int y, t_window *window);
+t_color	lerp_color(t_color c1, t_color c2, float t);
+double	lerp(float a, float b, float t);
+int	check_spheres(t_data *data, t_ray ray, t_hit_info *hit,
+	float *closest_t);
 
 #endif
