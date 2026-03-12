@@ -37,6 +37,7 @@ SRCS        := main.c \
 				window/init_window.c \
 				window/ft_render.c \
 				window/key_register.c \
+				window/render_utils.c \
 				math/vec_add.c \
 				math/vec_dot.c \
 				math/vec_length.c \
