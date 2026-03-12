@@ -21,7 +21,7 @@ void	init_window(t_data *data)
 		return ;
 	data->window->mlx = mlx_init(WIDTH, HEIGHT, "minirt", true);
 	if (!data->window->mlx)
-        return ;
+		return ;
 	data->window->mlx_image = mlx_new_image(data->window->mlx, WIDTH, HEIGHT);
 	if (!data->window->mlx_image)
 		return ;
