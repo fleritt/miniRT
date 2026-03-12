@@ -12,16 +12,16 @@
 
 #include "../../include/minirt.h"
 
-void close_window(void *param)
+void	close_window(void *param)
 {
-	t_data *data;
+	t_data	*data;
 
 	data = (t_data *)param;
 	mlx_close_window(data->window->mlx);
 }
 
-void key_register(mlx_key_data_t keydata, void *param)
+void	key_register(mlx_key_data_t keydata, void *param)
 {
-    if (keydata.key == MLX_KEY_ESCAPE && keydata.action == MLX_PRESS)
+	if (keydata.key == MLX_KEY_ESCAPE && keydata.action == MLX_PRESS)
 		close_window(param);
 }
