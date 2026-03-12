@@ -6,13 +6,13 @@
 /*   By: rfleritt <rfleritt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/12 19:24:44 by rfleritt          #+#    #+#             */
-/*   Updated: 2025/12/14 10:59:36 by rfleritt         ###   ########.fr       */
+/*   Updated: 2026/03/12 16:07:00 by rfleritt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minirt.h"
 
-t_vec3 vec_sub(t_vec3 a, t_vec3 b)
+t_vec3	vec_sub(t_vec3 a, t_vec3 b)
 {
-    return (vec_new(a.x - b.x, a.y - b.y, a.z - b.z));
+	return (vec_new(a.x - b.x, a.y - b.y, a.z - b.z));
 }

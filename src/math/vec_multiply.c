@@ -6,13 +6,13 @@
 /*   By: rfleritt <rfleritt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/12 19:25:18 by rfleritt          #+#    #+#             */
-/*   Updated: 2025/12/14 11:06:58 by rfleritt         ###   ########.fr       */
+/*   Updated: 2026/03/12 16:06:53 by rfleritt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minirt.h"
 
-t_vec3 vec_mult(t_vec3 v, float t)
+t_vec3	vec_mult(t_vec3 v, float t)
 {
-    return(vec_new(v.x * t, v.y * t, v.z * t));
+	return (vec_new(v.x * t, v.y * t, v.z * t));
 }

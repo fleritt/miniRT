@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hit_cylinder.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ricardo <ricardo@student.42.fr>            +#+  +:+       +#+        */
+/*   By: rfleritt <rfleritt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/07 18:00:00 by ricardo           #+#    #+#             */
-/*   Updated: 2026/02/07 17:46:08 by ricardo          ###   ########.fr       */
+/*   Updated: 2026/03/12 17:41:13 by rfleritt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ static int	check_top_cap(t_ray ray, t_cylinder cy, t_hit_info *hit)
 	return (1);
 }
 
-static int	hit_cylinder_caps(t_ray ray, t_cylinder cy, t_hit_info *hit)
+int	hit_cylinder_caps(t_ray ray, t_cylinder cy, t_hit_info *hit)
 {
 	if (check_bottom_cap(ray, cy, hit))
 		return (1);
@@ -71,7 +71,7 @@ static int	hit_cylinder_caps(t_ray ray, t_cylinder cy, t_hit_info *hit)
 	return (0);
 }
 
-static float	cylinder_disc(t_ray ray, t_cylinder cy, float *a, float *b)
+float	cylinder_disc(t_ray ray, t_cylinder cy, float *a, float *b)
 {
 	float	c;
 	t_vec3	oc;
@@ -88,7 +88,7 @@ static float	cylinder_disc(t_ray ray, t_cylinder cy, float *a, float *b)
 	return (*b * *b - 4 * *a * c);
 }
 
-static int	fill_cyl(t_ray ray, t_cylinder cy, float t, t_hit_info *hit)
+int	fill_cyl(t_ray ray, t_cylinder cy, float t, t_hit_info *hit)
 {
 	float	height_proj;
 	t_vec3	point;
@@ -108,31 +108,4 @@ static int	fill_cyl(t_ray ray, t_cylinder cy, float t, t_hit_info *hit)
 	if (vec3_dot(hit->normal, ray.direction) > 0)
 		hit->normal = vec_mult(hit->normal, -1);
 	return (1);
-}
-
-static int	cylinder_body_hit(t_ray ray, t_cylinder cy, t_hit_info *hit)
-{
-	float	a;
-	float	b;
-	float	discriminant;
-	float	sqrt_d;
-	float	t;
-
-	discriminant = cylinder_disc(ray, cy, &a, &b);
-	if (discriminant < 0)
-		return (0);
-	sqrt_d = sqrt(discriminant);
-	t = (-b - sqrt_d) / (2 * a);
-	if (t < 0.001f)
-		t = (-b + sqrt_d) / (2 * a);
-	if (t <= 0.001f)
-		return (0);
-	return (fill_cyl(ray, cy, t, hit));
-}
-
-int	hit_cylinder_info(t_ray ray, t_cylinder cy, t_hit_info *hit)
-{
-	if (cylinder_body_hit(ray, cy, hit))
-		return (1);
-	return (hit_cylinder_caps(ray, cy, hit));
 }

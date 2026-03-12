@@ -1,40 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_cylinder.c                                   :+:      :+:    :+:   */
+/*   parse_extra.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rfleritt <rfleritt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/03/12 16:20:35 by rfleritt          #+#    #+#             */
-/*   Updated: 2026/03/12 16:21:16 by rfleritt         ###   ########.fr       */
+/*   Created: 2026/03/12 16:26:16 by rfleritt          #+#    #+#             */
+/*   Updated: 2026/03/12 17:13:57 by rfleritt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minirt.h"
 
-void	parse_cylinder(t_data *data)
+void	parse_ambient(t_data *data)
 {
 	t_scene	*temp;
-	int		n_cylinder;
+	int		n_ambient;
 
 	temp = data->token;
-	n_cylinder = found_count_element(temp, CYLINDER);
-	if (n_cylinder == 0)
-	{
-		data->scene->cylinder = NULL;
-		data->scene->n_cylinder = 0;
-		return ;
-	}
-	data->scene->cylinder = malloc(sizeof(t_cylinder) * n_cylinder);
-	n_cylinder = 0;
+	n_ambient = found_count_element(temp, AMBIENT);
+	if (n_ambient == 0)
+		exit_msg_error("Program needs one light ambient");
+	else if (n_ambient > 1)
+		exit_msg_error("Program needs only light ambient");
 	while (temp)
 	{
-		if (temp->type == CYLINDER)
-		{
-			data->scene->cylinder[n_cylinder] = set_cylinder(temp->data);
-			n_cylinder++;
-		}
+		if (temp->type == AMBIENT)
+			data->scene->ambient = set_ambient(temp->data);
 		temp = temp->next;
 	}
-	data->scene->n_cylinder = n_cylinder;
+}
+
+t_sphere	set_sphere(char **data)
+{
+	t_sphere	sphere;
+
+	sphere.center = parse_vec(data[1]);
+	sphere.radius = ft_atof(data[2]);
+	sphere.color = parse_color(data[3]);
+	return (sphere);
 }

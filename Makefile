@@ -6,7 +6,7 @@
 #    By: rfleritt <rfleritt@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/11/12 09:14:24 by rfleritt          #+#    #+#              #
-#    Updated: 2026/03/09 17:02:44 by rfleritt         ###   ########.fr        #
+#    Updated: 2026/03/12 17:39:34 by rfleritt         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -54,12 +54,15 @@ SRCS        := main.c \
 				parser/set_elements.c \
 				parser/cleanup.c \
 				parser/parse_cylinder.c \
+				parser/parse_extra.c \
 				ray_tracer/hit_sphere.c \
 				ray_tracer/hit_plane.c \
 				ray_tracer/camera.c \
 				ray_tracer/ambient.c \
 				ray_tracer/lighting.c \
 				ray_tracer/hit_cylinder.c \
+				ray_tracer/hit_cylinder_utils.c \
+				ray_tracer/lighting_utils.c \
 
 OBJS        := $(addprefix $(OBJ_DIR), $(SRCS:.c=.o))
 

@@ -6,18 +6,18 @@
 /*   By: rfleritt <rfleritt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/22 17:06:36 by rfleritt          #+#    #+#             */
-/*   Updated: 2025/12/22 17:13:29 by rfleritt         ###   ########.fr       */
+/*   Updated: 2026/03/12 16:06:49 by rfleritt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minirt.h"
 
-t_vec3 vec_cross(t_vec3 a, t_vec3 b)
+t_vec3	vec_cross(t_vec3 a, t_vec3 b)
 {
-    t_vec3 v;
+	t_vec3	v;
 
-    v.x = a.y * b.z - a.z * b.y;
-    v.y = a.x * b.z - a.z * b.x;
-    v.z = a.x * b.y - a.y * b.x;
-    return (v);
+	v.x = a.y * b.z - a.z * b.y;
+	v.y = a.x * b.z - a.z * b.x;
+	v.z = a.x * b.y - a.y * b.x;
+	return (v);
 }

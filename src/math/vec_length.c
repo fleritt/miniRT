@@ -6,13 +6,13 @@
 /*   By: rfleritt <rfleritt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/12 19:26:30 by rfleritt          #+#    #+#             */
-/*   Updated: 2025/12/14 11:56:56 by rfleritt         ###   ########.fr       */
+/*   Updated: 2026/03/12 16:06:52 by rfleritt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minirt.h"
 
-float vec_length(t_vec3 v)
+float	vec_length(t_vec3 v)
 {
-    return (sqrt(vec3_dot(v, v)));
+	return (sqrt(vec3_dot(v, v)));
 }

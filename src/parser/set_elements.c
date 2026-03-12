@@ -3,94 +3,79 @@
 /*                                                        :::      ::::::::   */
 /*   set_elements.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ricardo <ricardo@student.42.fr>            +#+  +:+       +#+        */
+/*   By: rfleritt <rfleritt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/27 15:30:56 by rfleritt          #+#    #+#             */
-/*   Updated: 2026/02/07 18:36:35 by ricardo          ###   ########.fr       */
+/*   Updated: 2026/03/12 17:13:29 by rfleritt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minirt.h"
 
-t_sphere set_sphere(char **data)
+t_light	set_light(char **data)
 {
-    t_sphere sphere;
+	t_light	light;
 
-    sphere.center = parse_vec(data[1]);
-    sphere.radius = ft_atof(data[2]);
-    sphere.color = parse_color(data[3]);
-    return (sphere);
+	light.position = parse_vec(data[1]);
+	light.intensity = ft_atof(data[2]);
+	if (light.intensity < 0.0f || light.intensity > 1.0f)
+		exit_msg_error("Intensity light just can be 0.0 - 1.0");
+	if (data[3])
+		light.color = parse_color(data[3]);
+	else
+		light.color = (t_color){255, 255, 255};
+	return (light);
 }
 
-t_light set_light(char **data)
+t_plane	set_plane(char **data)
 {
-    t_light light;
+	t_plane	plane;
 
-    light.position = parse_vec(data[1]);
-    light.intensity = ft_atof(data[2]);
-    if (light.intensity < 0.0f || light.intensity > 1.0f)
-        exit_msg_error("Intensity light just can be 0.0 - 1.0");
-    if (data[3])
-        light.color = parse_color(data[3]);
-    else
-        light.color = (t_color){255, 255, 255};
-    return (light);
+	plane.point = parse_vec(data[1]);
+	plane.normal = parse_vec(data[2]);
+	if (plane.normal.x == 0 && plane.normal.y == 0 && plane.normal.z == 0)
+		exit_msg_error("plane normal can't be 0,0,0");
+	plane.color = parse_color(data[3]);
+	return (plane);
 }
 
-t_plane set_plane(char **data)
+t_camera	set_camera(char **data)
 {
-    t_plane plane;
+	t_camera	camera;
 
-    plane.point = parse_vec(data[1]);
-    plane.normal = parse_vec(data[2]);
-    if (plane.normal.x == 0 && plane.normal.y == 0 && plane.normal.z == 0)
-        exit_msg_error("plane normal can't be 0,0,0");
-    plane.color = parse_color(data[3]);
-    return (plane);
+	if (!data[1] || !data[2] || !data[3])
+		exit_msg_error("Camera needs: position direction fov");
+	camera.position = parse_vec(data[1]);
+	camera.direction = parse_vec(data[2]);
+	camera.pov = ft_atof(data[3]);
+	if (camera.pov < 0 || camera.pov > 180)
+		exit_msg_error("Camera pov needs a parameter between 0-180");
+	return (camera);
 }
 
-t_camera set_camera(char **data)
+t_ambient	set_ambient(char **data)
 {
-    t_camera camera;
+	t_ambient	ambient;
 
-    if (!data[1] || !data[2] || !data[3])
-        exit_msg_error("Camera needs: position direction fov");
-
-    camera.position = parse_vec(data[1]);
-    camera.direction = parse_vec(data[2]);
-    camera.pov = ft_atof(data[3]);
-    if (camera.pov < 0 || camera.pov > 180)
-        exit_msg_error("Camera pov needs a parameter between 0-180");
-    return (camera);
+	ambient.intensity = ft_atof(data[1]);
+	if (ambient.intensity < 0.0f || ambient.intensity > 1.0f)
+		exit_msg_error("Intensity light just can be 0.0 - 1.0");
+	ambient.color = parse_color(data[2]);
+	return (ambient);
 }
 
-t_ambient set_ambient(char **data)
+t_cylinder	set_cylinder(char **data)
 {
-    t_ambient ambient;
+	t_cylinder	cy;
 
-    ambient.intensity = ft_atof(data[1]);
-    if (ambient.intensity < 0.0f || ambient.intensity > 1.0f)
-        exit_msg_error("Intensity light just can be 0.0 - 1.0");
-    ambient.color = parse_color(data[2]);
-    return (ambient);
-}
-
-t_cylinder set_cylinder(char **data)
-{
-    t_cylinder cy;
-
-    if (!data[1] || !data[2] || !data[3] || !data[4] || !data[5])
-        exit_msg_error("Cylinder needs: center axis diameter height color");
-
-    cy.center = parse_vec(data[1]);
-    cy.axis = vec_norm(parse_vec(data[2]));
-
-    if (cy.axis.x == 0 && cy.axis.y == 0 && cy.axis.z == 0)
-        exit_msg_error("Cylinder axis can't be 0,0,0");
-
-    cy.radius = ft_atof(data[3]) / 2.0f;
-    cy.height = ft_atof(data[4]);
-    cy.color = parse_color(data[5]);
-
-    return (cy);
+	if (!data[1] || !data[2] || !data[3] || !data[4] || !data[5])
+		exit_msg_error("Cylinder needs: center axis diameter height color");
+	cy.center = parse_vec(data[1]);
+	cy.axis = vec_norm(parse_vec(data[2]));
+	if (cy.axis.x == 0 && cy.axis.y == 0 && cy.axis.z == 0)
+		exit_msg_error("Cylinder axis can't be 0,0,0");
+	cy.radius = ft_atof(data[3]) / 2.0f;
+	cy.height = ft_atof(data[4]);
+	cy.color = parse_color(data[5]);
+	return (cy);
 }

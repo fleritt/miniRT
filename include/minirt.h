@@ -6,7 +6,7 @@
 /*   By: rfleritt <rfleritt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/12 08:36:35 by rfleritt          #+#    #+#             */
-/*   Updated: 2026/03/05 19:15:23 by rfleritt         ###   ########.fr       */
+/*   Updated: 2026/03/12 17:41:46 by rfleritt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,5 +77,11 @@ t_color	lerp_color(t_color c1, t_color c2, float t);
 double	lerp(float a, float b, float t);
 int	check_spheres(t_data *data, t_ray ray, t_hit_info *hit,
 	float *closest_t);
+int	cylinder_body_hit(t_ray ray, t_cylinder cy, t_hit_info *hit);
+int	hit_cylinder_info(t_ray ray, t_cylinder cy, t_hit_info *hit);
+int	hit_cylinder_caps(t_ray ray, t_cylinder cy, t_hit_info *hit);
+float	cylinder_disc(t_ray ray, t_cylinder cy, float *a, float *b);
+int	fill_cyl(t_ray ray, t_cylinder cy, float t, t_hit_info *hit);
+
 
 #endif

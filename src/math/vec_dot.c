@@ -6,13 +6,13 @@
 /*   By: rfleritt <rfleritt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/12 19:22:42 by rfleritt          #+#    #+#             */
-/*   Updated: 2025/12/14 11:06:25 by rfleritt         ###   ########.fr       */
+/*   Updated: 2026/03/12 16:06:50 by rfleritt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minirt.h"
 
-float  vec3_dot(t_vec3 a, t_vec3 b)
+float	vec3_dot(t_vec3 a, t_vec3 b)
 {
-    return (a.x * b.x + a.y * b.y + a.z * b.z);
+	return (a.x * b.x + a.y * b.y + a.z * b.z);
 }

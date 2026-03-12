@@ -3,153 +3,86 @@
 /*                                                        :::      ::::::::   */
 /*   lighting.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ricardo <ricardo@student.42.fr>            +#+  +:+       +#+        */
+/*   By: rfleritt <rfleritt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/07 18:30:00 by ricardo           #+#    #+#             */
-/*   Updated: 2026/02/07 18:34:27 by ricardo          ###   ########.fr       */
+/*   Updated: 2026/03/12 17:36:14 by rfleritt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minirt.h"
 
-/**
- * Verifica si un punto está en sombra respecto a una luz
- * Lanza un rayo desde el punto hacia la luz
- * Si intersecta algo antes de llegar a la luz, está en sombra
- * OPTIMIZADO: usa hit_sphere en vez de hit_sphere_info (más rápido)
- * OPTIMIZADO: early exit en cuanto encuentra un objeto bloqueando
- */
-int	is_in_shadow(t_data *data, t_hit_info hit, t_light light)
+static t_ray	build_shadow_ray(t_hit_info hit, t_light light, float *dist)
 {
 	t_ray	shadow_ray;
 	t_vec3	light_dir;
-	float	light_distance;
+
+	light_dir = vec_sub(light.position, hit.point);
+	*dist = vec_length(light_dir);
+	shadow_ray.origin = vec_add(hit.point, vec_mult(hit.normal, 0.001f));
+	shadow_ray.direction = vec_norm(light_dir);
+	return (shadow_ray);
+}
+
+static int	shadow_spheres(t_data *data, t_ray ray, float dist)
+{
 	float	t;
 	int		i;
 
-	// Vector y distancia hacia la luz
-	light_dir = vec_sub(light.position, hit.point);
-	light_distance = vec_length(light_dir);
-	light_dir = vec_norm(light_dir);
-
-	// Rayo desde el punto (con pequeño offset) hacia la luz
-	shadow_ray.origin = vec_add(hit.point, vec_mult(hit.normal, 0.001f));
-	shadow_ray.direction = light_dir;
-
-	// Comprobar esferas (early exit en cuanto encuentra oclusión)
 	i = 0;
 	while (i < data->scene->n_sphere)
 	{
-		t = hit_sphere(shadow_ray, data->scene->sphere[i]);
-		if (t > 0.001f && t < light_distance)
+		t = hit_sphere(ray, data->scene->sphere[i]);
+		if (t > 0.001f && t < dist)
 			return (1);
-		i++;
-	}
-
-	// Comprobar planos (early exit)
-	i = 0;
-	while (i < data->scene->n_plane)
-	{
-		t = hit_plane(shadow_ray, data->scene->plane[i]);
-		if (t > 0.001f && t < light_distance)
-			return (1);
-		i++;
-	}
-	// Comprobar cilindros
-	i = 0;
-	while (i < data->scene->n_cylinder)
-	{
-		if (hit_cylinder_info(shadow_ray,
-				data->scene->cylinder[i], &hit))
-		{
-			if (hit.t > 0.001f && hit.t < light_distance)
-				return (1);
-		}
 		i++;
 	}
 	return (0);
 }
 
-/**
- * Calcula la componente especular (brillo/reflejo)
- * Usa el modelo de Phong: specular = light × pow(dot(reflect, view), shininess)
- */
-t_color	calculate_specular(t_light light, t_hit_info hit, t_vec3 view_dir)
+static int	shadow_planes(t_data *data, t_ray ray, float dist)
 {
-	t_vec3	light_dir;
-	t_vec3	reflect_dir;
-	float	spec;
-	t_color	result;
-	float	shininess;
+	float	t;
+	int		i;
 
-	shininess = 32.0f; // Brillo del material (más alto = más brillante)
-
-	// Vector hacia la luz
-	light_dir = vec_norm(vec_sub(light.position, hit.point));
-
-	// Vector reflejado: R = 2 * (N·L) * N - L
-	reflect_dir = vec_sub(vec_mult(hit.normal, 2.0f * vec3_dot(hit.normal, light_dir)), light_dir);
-	reflect_dir = vec_norm(reflect_dir);
-
-	// Calcular componente especular
-	spec = vec3_dot(reflect_dir, view_dir);
-	if (spec < 0)
-		spec = 0;
-
-	// Elevar a la potencia (shininess)
-	spec = pow(spec, shininess);
-
-	// Color especular (blanco puro modulado por la luz)
-	result.r = (light.color.r / 255.0f) * light.intensity * spec * 255.0f;
-	result.g = (light.color.g / 255.0f) * light.intensity * spec * 255.0f;
-	result.b = (light.color.b / 255.0f) * light.intensity * spec * 255.0f;
-
-	return (result);
+	i = 0;
+	while (i < data->scene->n_plane)
+	{
+		t = hit_plane(ray, data->scene->plane[i]);
+		if (t > 0.001f && t < dist)
+			return (1);
+		i++;
+	}
+	return (0);
 }
 
-/**
- * Calcula la iluminación completa para un punto:
- * - Luz ambiental (siempre)
- * - Luz difusa (si no está en sombra)
- * - Luz especular (si no está en sombra)
- * OPTIMIZADO: usa FAST_RENDER para skip sombras en escenas pesadas
- */
-t_color	calculate_lighting(t_data *data, t_hit_info hit, t_vec3 view_dir)
+static int	shadow_cylinders(t_data *data, t_ray ray, float dist)
 {
-	t_color	ambient;
-	t_color	diffuse;
-	t_color	specular;
-	t_color	final_color;
-	int		in_shadow;
+	t_hit_info	hit;
+	int			i;
 
-	// Luz ambiental (siempre presente)
-	ambient = calculate_ambient(data->scene->ambient, hit.color);
-
-	// Inicializar difusa y especular
-	diffuse = (t_color){0, 0, 0};
-	specular = (t_color){0, 0, 0};
-
-	// Si hay luz, calcular difusa y especular
-	if (data->scene->light && data->scene->n_light > 0)
+	i = 0;
+	while (i < data->scene->n_cylinder)
 	{
-		#ifdef FAST_RENDER
-			// Modo rápido: sin sombras
-			in_shadow = 0;
-		#else
-			// Modo normal: con sombras
-			in_shadow = is_in_shadow(data, hit, data->scene->light[0]);
-		#endif
-
-		if (!in_shadow)
-		{
-			diffuse = calculate_diffuse(data->scene->light[0], hit);
-			specular = calculate_specular(data->scene->light[0], hit, view_dir);
-		}
+		if (hit_cylinder_info(ray, data->scene->cylinder[i], &hit))
+			if (hit.t > 0.001f && hit.t < dist)
+				return (1);
+		i++;
 	}
+	return (0);
+}
 
-	// Sumar todas las componentes
-	final_color = add_colors(ambient, diffuse);
-	final_color = add_colors(final_color, specular);
+int	is_in_shadow(t_data *data, t_hit_info hit, t_light light)
+{
+	t_ray	shadow_ray;
+	float	light_distance;
 
-	return (final_color);
+	shadow_ray = build_shadow_ray(hit, light, &light_distance);
+	if (shadow_spheres(data, shadow_ray, light_distance))
+		return (1);
+	if (shadow_planes(data, shadow_ray, light_distance))
+		return (1);
+	if (shadow_cylinders(data, shadow_ray, light_distance))
+		return (1);
+	return (0);
 }

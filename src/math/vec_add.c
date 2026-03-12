@@ -6,13 +6,13 @@
 /*   By: rfleritt <rfleritt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/12 19:22:23 by rfleritt          #+#    #+#             */
-/*   Updated: 2025/12/14 10:58:39 by rfleritt         ###   ########.fr       */
+/*   Updated: 2026/03/12 16:06:47 by rfleritt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minirt.h"
 
-t_vec3 vec_add(t_vec3 a, t_vec3 b)
+t_vec3	vec_add(t_vec3 a, t_vec3 b)
 {
-    return (vec_new(a.x + b.x, a.y + b.y, a.z + b.z));
+	return (vec_new(a.x + b.x, a.y + b.y, a.z + b.z));
 }
