@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: rfleritt <rfleritt@student.42.fr>          +#+  +:+       +#+         #
+#    By: ricardo <ricardo@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/11/12 09:14:24 by rfleritt          #+#    #+#              #
-#    Updated: 2026/03/12 17:39:34 by rfleritt         ###   ########.fr        #
+#    Updated: 2026/04/05 15:56:59 by ricardo          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,7 @@ CLEAR_COLOR := \033[0m
 NAME        := miniRT
 
 CC          := gcc
-CFLAGS      := -Wall -Werror -Wextra -g3 #-fsanitize=address
+CFLAGS      := -Wall -Werror -Wextra
 RM          := rm -f
 
 SRC_DIR     := src/
@@ -126,5 +126,7 @@ valgrind: all
 debug: CFLAGS += -g3 -fsanitize=address
 debug: re
 	@echo "$(YELLOW)🐛 Compilado en modo DEBUG$(CLEAR_COLOR)"
+
+bonus: all
 
 .PHONY: all clean fclean re run norminette valgrind debug

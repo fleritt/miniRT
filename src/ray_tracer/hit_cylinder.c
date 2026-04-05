@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hit_cylinder.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rfleritt <rfleritt@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ricardo <ricardo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/07 18:00:00 by ricardo           #+#    #+#             */
-/*   Updated: 2026/03/12 17:41:13 by rfleritt         ###   ########.fr       */
+/*   Updated: 2026/04/05 16:25:33 by ricardo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ static int	check_bottom_cap(t_ray ray, t_cylinder cy, t_hit_info *hit)
 	hit->point = point;
 	hit->normal = vec_mult(cy.axis, -1);
 	hit->color = cy.color;
+	if (vec3_dot(hit->normal, ray.direction) > 0)
+    	hit->normal = vec_mult(hit->normal, -1);
 	return (1);
 }
 
@@ -59,6 +61,8 @@ static int	check_top_cap(t_ray ray, t_cylinder cy, t_hit_info *hit)
 	hit->point = point;
 	hit->normal = cy.axis;
 	hit->color = cy.color;
+	if (vec3_dot(hit->normal, ray.direction) > 0)
+    	hit->normal = vec_mult(hit->normal, -1);
 	return (1);
 }
 

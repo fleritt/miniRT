@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hit_sphere.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rfleritt <rfleritt@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ricardo <ricardo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/21 16:50:07 by rfleritt          #+#    #+#             */
-/*   Updated: 2026/03/12 17:29:24 by rfleritt         ###   ########.fr       */
+/*   Updated: 2026/04/05 17:08:24 by ricardo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,8 @@ int	hit_sphere_info(t_ray ray, t_sphere sphere, t_hit_info *hit)
 	hit->point = vec_add(ray.origin, vec_mult(ray.direction, t));
 	hit->normal = vec_norm(vec_sub(hit->point, sphere.center));
 	hit->color = sphere.color;
+	if (vec3_dot(ray.direction, hit->normal) > 0)
+		hit->normal = vec_mult(hit->normal, -1);
 	return (1);
 }
 
@@ -68,7 +70,7 @@ void	init_hit_sphere(int x, int y, t_data *data)
 	aspect_ratio = (float)WIDTH / (float)HEIGHT;
 	scale = tan((data->scene->camera.pov * M_PI / 180.0f) / 2.0f);
 	px = (2.0f * ((x + 0.5f) / WIDTH) - 1.0f) * aspect_ratio * scale;
-	py = (1.0f - 2.0f * ((y + 0.5f) / HEIGHT)) * scale;
+	py = (2.0f * ((y + 0.5f) / HEIGHT) - 1.0f) * scale;
 	ray_dir = data->scene->camera.forward;
 	ray_dir = vec_add(ray_dir, vec_mult(data->scene->camera.right, px));
 	ray_dir = vec_add(ray_dir, vec_mult(data->scene->camera.up, py));

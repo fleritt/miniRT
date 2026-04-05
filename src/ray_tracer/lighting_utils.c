@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lighting_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rfleritt <rfleritt@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ricardo <ricardo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/12 17:35:39 by rfleritt          #+#    #+#             */
-/*   Updated: 2026/03/12 17:37:17 by rfleritt         ###   ########.fr       */
+/*   Updated: 2026/04/05 16:07:15 by ricardo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,21 +41,22 @@ t_color	calculate_lighting(t_data *data, t_hit_info hit, t_vec3 view_dir)
 	t_color	diffuse;
 	t_color	specular;
 	t_color	final_color;
-	int		in_shadow;
+	int		i;
 
 	ambient = calculate_ambient(data->scene->ambient, hit.color);
-	diffuse = (t_color){0, 0, 0};
-	specular = (t_color){0, 0, 0};
-	if (data->scene->light && data->scene->n_light > 0)
+	final_color = ambient;
+	i = 0;
+	while (i < data->scene->n_light)
 	{
-		in_shadow = is_in_shadow(data, hit, data->scene->light[0]);
-		if (!in_shadow)
+		if (!is_in_shadow(data, hit, data->scene->light[i]))
 		{
-			diffuse = calculate_diffuse(data->scene->light[0], hit);
-			specular = calculate_specular(data->scene->light[0], hit, view_dir);
+			diffuse = calculate_diffuse(data->scene->light[i], hit);
+			specular = calculate_specular(data->scene->light[i], hit,
+					view_dir);
+			final_color = add_colors(final_color, diffuse);
+			final_color = add_colors(final_color, specular);
 		}
+		i++;
 	}
-	final_color = add_colors(ambient, diffuse);
-	final_color = add_colors(final_color, specular);
 	return (final_color);
 }

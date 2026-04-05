@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_scene.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rfleritt <rfleritt@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ricardo <ricardo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/10 18:13:48 by rfleritt          #+#    #+#             */
-/*   Updated: 2026/03/12 17:18:50 by rfleritt         ###   ########.fr       */
+/*   Updated: 2026/04/05 16:37:44 by ricardo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ int	tokenize_scene(char *scene, t_data *data)
 	if (scene[i - 1] != 't' || scene[i - 2] != 'r' || scene[i - 3] != '.')
 		return (ft_msg_error("The file is only .rt format", 1));
 	if (access(scene, F_OK) || access(scene, R_OK))
-		return (ft_msg_error("No existe el archivo pelotudo", 1));
+		return (ft_msg_error("Doesn´t exist", 1));
 	fd = open(scene, O_RDONLY);
 	data->token = NULL;
 	line = get_next_line(fd);
